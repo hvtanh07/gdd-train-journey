@@ -935,7 +935,6 @@ function view(l){
   };
   const withEl=t('With elements','Khi gặp yếu tố đặc biệt');
   /* open questions from Train_GDD.md stay open: they are marked, not answered */
-  const oq=n=>` <span class="wip">Q${n} · ${t('open','chưa chốt')}</span>`;
   const asm=`<b>${t('Assumed','Giả định')}:</b> `;
 
   const B={};
@@ -986,7 +985,12 @@ function view(l){
         [nm('Blocked','Bị chặn'),t('Wrong move: 1 ticket is deducted.','Chạm sai: trừ 1 ticket.')+
           `<br>`+asm+t('(from the SFX list) the train moves forward, hits the blocking train and returns to its place.','(suy ra từ danh sách SFX) tàu chạy tới, đụng tàu đang chặn rồi quay về chỗ cũ.')]
       ],'compact')+
-      ul([t(`What happens if the player taps while another train is still moving out is not defined yet.`,`Chưa định nghĩa chuyện gì xảy ra khi người chơi chạm trong lúc một tàu khác còn đang chạy ra.`)+oq(2)]))+
+      ul([
+        t(`Tapping a train while another train is still moving out follows the same rules: a free train exits, a blocked train hits the other train’s body.`,
+          `Chạm vào một tàu trong lúc tàu khác còn đang chạy ra vẫn theo luật thường: tàu tự do thì đi ra, tàu bị chặn thì đụng vào thân tàu khác.`),
+        t(`Two trains moving at the same time can clip through each other where their paths cross.`,
+          `Hai tàu cùng di chuyển có thể đi xuyên qua nhau ở chỗ đường đi cắt nhau.`)
+      ]))+
     ent('Ticket',ul([
       t(`Each level starts with 3 tickets.`,`Mỗi màn bắt đầu với 3 ticket.`),
       t(`Each wrong move (tapping a blocked train) deducts 1 ticket.`,`Mỗi lần chạm sai (chạm vào tàu bị chặn) trừ 1 ticket.`),
@@ -1024,7 +1028,7 @@ function view(l){
            <li>${t(`Choose to restart the level manually`,`Tự chọn chơi lại màn`)}</li>
            <li>${t(`Exit to home during a level`,`Thoát về màn hình chính khi đang chơi`)}</li>
          </ul>
-         <p class="note">${t(`<b>Proposed rule</b> to remove ambiguity: at most 1 life is deducted per level attempt, however that attempt ends.`,`<b>Đề xuất</b> để tránh hiểu nhầm: mỗi lượt chơi một màn chỉ trừ tối đa 1 mạng, dù lượt đó kết thúc theo cách nào.`)}${oq(4)}</p>`)+
+         <p class="note">${t(`The player loses a life only in these three cases.`,`Người chơi chỉ mất tim trong ba trường hợp này.`)}</p>`)+
       panel(t('Unlimited lives timer','Đồng hồ tim vô hạn'),
         `<p>${t('While unlimited lives are active, the timer shows the time left in one of three formats:','Khi đang có tim vô hạn, đồng hồ hiện thời gian còn lại theo một trong ba dạng:')}</p>`+
         table(t('Unlimited lives timer format','Định dạng đồng hồ tim vô hạn'),
@@ -1237,7 +1241,7 @@ function view(l){
     [t('Progress save','Lưu tiến độ'),
      t(`Some steps save that they are complete. If the player closes the app before finishing the tutorial and opens it again, the FTUE skips the saved steps and continues from the next one.`,
        `Một số bước sẽ lưu lại trạng thái đã hoàn thành. Nếu người chơi thoát game giữa chừng rồi mở lại, FTUE bỏ qua các bước đã lưu và tiếp tục từ bước kế tiếp.`)]
-  ])+`<p class="note">${t(`Train_GDD.md keeps one point open: whether the game HUD stays usable while input masking is on.`,`Train_GDD.md còn để ngỏ một điểm: HUD có bấm được khi đang khóa thao tác hay không.`)}${oq(12)}</p>`;
+  ])+`<p class="note">${t(`The HUD stays usable while a tutorial is running.`,`HUD vẫn bấm được khi tutorial đang chạy.`)}</p>`;
 
   /* PER GAME: steps from Train_GDD.md 2.2 */
   B['ftue-steps']=table(t('FTUE steps','Các bước FTUE'),
@@ -1262,7 +1266,7 @@ function view(l){
       [N.el1,popup('Remove the top train<br>before removing the one beneath.','Lấy tàu ở trên ra<br>trước tàu bên dưới.'),lvl(11)],
       [N.el2,popup('Clear both ends of the train<br>before removing it.','Mở đường cho cả hai đầu tàu<br>trước khi lấy tàu ra.'),lvl(17)],
       [N.el3,popup('Linked Trains will exit together.','Các tàu liên kết sẽ cùng đi ra.'),lvl(22)]
-    ])+`<p class="note">${t(`When each popup appears is not stated yet.`,`Chưa ghi rõ mỗi popup hiện vào lúc nào.`)}${oq(15)}</p>`;
+    ]);
 
   /* PER GAME: one row per booster */
   B['booster-tutorial']=table(t('Booster tutorial','Hướng dẫn công cụ hỗ trợ'),
@@ -1612,12 +1616,17 @@ function view(l){
   const day=(title,body)=>`<div class="sub"><h3><span>${title}</span></h3>${body}</div>`;
   B['change-note']=`<p class="sec-intro">${t('Changes made to this GDD, newest day first.','Các thay đổi của tài liệu này, ngày mới nhất ở trên cùng.')}</p>`+
     day('2026-10-25',
+      ent(t('Open questions answered','Trả lời câu hỏi còn mở'),ul([
+        t(`Q2: tapping during another train’s exit follows the normal rules; moving trains can clip through each other.`,`Q2: chạm khi tàu khác đang chạy ra vẫn theo luật thường; các tàu đang chạy có thể đi xuyên qua nhau.`),
+        t(`Q4: a life is lost only on lose and restart, manual restart, or exit to home.`,`Q4: chỉ mất tim khi thua và chơi lại, tự chơi lại, hoặc thoát về màn hình chính.`),
+        t(`Q12: the HUD stays usable during tutorials.`,`Q12: HUD vẫn bấm được khi tutorial đang chạy.`),
+        t(`Q15: dropped, not needed in the GDD.`,`Q15: bỏ, không cần ghi trong GDD.`)
+      ]))+
       ent(t('Sections removed','Bỏ bớt mục'),ul([
         t(`Removed Controls, Levels & difficulty, UI flow and Analytics.`,`Bỏ các mục Điều khiển, Level & độ khó, UI flow và Analytics.`)
       ]))+
       ent(t('New document','Tài liệu mới'),ul([
         t(`Created this GDD from the template, with the game rules from Train_GDD.md.`,`Tạo tài liệu này từ template, luật chơi lấy từ Train_GDD.md.`),
-        t(`Open questions kept open: Q2, Q4, Q12, Q15.`,`Các câu hỏi còn mở được giữ nguyên: Q2, Q4, Q12, Q15.`),
         t(`Numbers not in Train_GDD.md are marked TBD until the config sheet exists.`,`Các con số không có trong Train_GDD.md được ghi TBD cho tới khi có sheet config.`)
       ])));
 
