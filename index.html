@@ -489,13 +489,10 @@ const SECTIONS=[
   {id:'game-mechanics',n:'1',c:1,en:'Game mechanics',vi:'Cơ chế trò chơi',subs:[
     {id:'gameplay-overview',n:'1.1',en:'Gameplay overview',vi:'Tổng quan lối chơi'},
     {id:'main-game-mechanics',n:'1.2',en:'Core loop',vi:'Core loop'},
-    {id:'controls',n:'1.3',en:'Controls',vi:'Điều khiển'},
-    {id:'level-difficulty',n:'1.4',en:'Levels & difficulty',vi:'Level & độ khó',wip:true},
-    {id:'ui-flow',n:'1.5',en:'UI flow',vi:'UI flow'},
-    {id:'additional-mechanics',n:'1.6',en:'Additional mechanics',vi:'Cơ chế bổ sung'},
-    {id:'win-screen-bonus',n:'1.7',en:'Win screen bonus',vi:'Thưởng thêm ở màn hình thắng'},
-    {id:'elements-mechanics',n:'1.8',en:'Elements',vi:'Yếu tố đặc biệt'},
-    {id:'booster-mechanics',n:'1.9',en:'Boosters',vi:'Booster'}]},
+    {id:'additional-mechanics',n:'1.3',en:'Additional mechanics',vi:'Cơ chế bổ sung'},
+    {id:'win-screen-bonus',n:'1.4',en:'Win screen bonus',vi:'Thưởng thêm ở màn hình thắng'},
+    {id:'elements-mechanics',n:'1.5',en:'Elements',vi:'Yếu tố đặc biệt'},
+    {id:'booster-mechanics',n:'1.6',en:'Boosters',vi:'Booster'}]},
   {id:'ftue--tutorial',n:'2',c:2,en:'FTUE & tutorial',vi:'FTUE & hướng dẫn',subs:[
     {id:'ftue-logic',n:'2.1',en:'FTUE logic',vi:'Cách FTUE hoạt động'},
     {id:'ftue-steps',n:'2.2',en:'FTUE steps',vi:'Các bước FTUE'},
@@ -518,8 +515,7 @@ const SECTIONS=[
     {id:'limited-time-reward',n:'7.1',en:'Limited Time Reward',vi:'Quà giới hạn thời gian'},
     {id:'skip-level',n:'7.2',en:'Skip Level',vi:'Bỏ qua màn'},
     {id:'retry-with-booster',n:'7.3',en:'Retry with Booster',vi:'Chơi lại kèm công cụ'}]},
-  {id:'analytics',n:'8',c:3,en:'Analytics',vi:'Analytics',wip:true},
-  {id:'change-note',n:'9',c:7,en:'Change note',vi:'Ghi chú thay đổi'}
+  {id:'change-note',n:'8',c:7,en:'Change note',vi:'Ghi chú thay đổi'}
 ];
 const SEC={};
 SECTIONS.forEach(s=>{SEC[s.id]=s;(s.subs||[]).forEach(u=>{SEC[u.id]=u;});});
@@ -945,7 +941,7 @@ function view(l){
   const B={};
 
   /* ===== 1. Game mechanics ===== */
-  /* PER GAME: 1.1 to 1.5, 1.8 and 1.9 describe this game's own rules (source: Train_GDD.md). */
+  /* PER GAME: 1.1, 1.2, 1.5 and 1.6 describe this game's own rules (source: Train_GDD.md). */
   B['gameplay-overview']=
     ent(t('How it plays','Cách chơi'),ul([
       t(`Each level is a board of interlocked trains.`,`Mỗi màn là một bàn chơi gồm nhiều đoàn tàu đan vào nhau.`),
@@ -997,43 +993,7 @@ function view(l){
       t(`Using all 3 tickets loses the level, after the revive offer (see 1.1).`,`Dùng hết 3 ticket là thua màn, sau lượt mời hồi sinh (xem 1.1).`)
     ]));
 
-  B['controls']=
-    ent(t('Tap','Chạm'),ul([
-      t(`Tap a train to try to remove it (see 1.2).`,`Chạm vào tàu để thử lấy tàu ra (xem 1.2).`),
-      t(`Tapping either train of a Linked pair selects both (see 1.8).`,`Chạm vào một trong hai tàu liên kết là chọn cả hai (xem 1.8).`),
-      t(`Tap a booster to use it. Erase then asks the player to select a train (see 1.9).`,`Chạm vào booster để dùng. Với Erase, người chơi chọn tiếp một tàu (xem 1.9).`)
-    ]))+
-    ent(t('Zoom','Phóng to'),ul([
-      t(`Zoom in with two fingers. Taught at level 2 (see 2.2).`,`Phóng to bằng hai ngón tay. Được hướng dẫn ở màn 2 (xem 2.2).`),
-      t(`Pan, zoom out and zoom limits are not in the GDD yet: TBD.`,`Kéo bàn chơi, thu nhỏ và giới hạn zoom chưa có trong GDD: TBD.`)
-    ]));
-
-  B['level-difficulty']=
-    ent(t('Every level','Mọi màn'),ul([
-      t(`3 tickets per level.`,`3 ticket mỗi màn.`),
-      t(`Elements unlock at levels 11, 17 and 22. Boosters unlock at levels 3, 5 and 7 (see the unlock order in section 2).`,
-        `Yếu tố đặc biệt mở ở màn 11, 17 và 22. Booster mở ở màn 3, 5 và 7 (xem thứ tự mở khóa ở mục 2).`)
-    ]))+
-    ent(t('Difficulty curve','Đường độ khó'),ul([
-      t(`Board size, number of trains and difficulty per level are not in the GDD yet: TBD.`,`Kích thước bàn chơi, số tàu và độ khó theo từng màn chưa có trong GDD: TBD.`)
-    ]));
-
-  B['ui-flow']=
-    ent(t('Level flow','Diễn biến một màn'),ol([
-      t(`The level starts with 3 tickets.`,`Màn bắt đầu với 3 ticket.`),
-      t(`The player taps a train.`,`Người chơi chạm vào một tàu.`)+ol([
-        t(`Free train: it exits the board.`,`Tàu tự do: tàu đi ra khỏi bàn chơi.`),
-        t(`Blocked train: 1 ticket is deducted.`,`Tàu bị chặn: trừ 1 ticket.`)]),
-      t(`All trains removed: <b>Win</b>. The Victory screen opens (see 1.6 and 1.7).`,`Lấy hết tàu: <b>Thắng</b>. Màn hình chiến thắng hiện ra (xem 1.6 và 1.7).`),
-      t(`Tickets reach 0: the revive is offered.`,`Hết ticket: trò chơi mời hồi sinh.`)+ol([
-        t(`Revive accepted: tickets return to 3 and play continues.`,`Đồng ý hồi sinh: ticket về lại 3 và chơi tiếp.`),
-        t(`Revive declined: <b>Lose</b>, and the lives system applies (see 1.6).`,`Từ chối hồi sinh: <b>Thua</b>, áp dụng hệ thống mạng (xem 1.6).`)])
-    ]))+
-    ent(t('Other screens','Các màn hình khác'),ul([
-      t(`Home, settings and the full screen map are not in the GDD yet: TBD.`,`Màn hình chính, cài đặt và sơ đồ màn hình đầy đủ chưa có trong GDD: TBD.`)
-    ]));
-
-  /* FIXED: 1.6 and 1.7 are shared logic across projects. Keep them as they are and only change the numbers. */
+  /* FIXED: 1.3 and 1.4 are shared logic across projects. Keep them as they are and only change the numbers. */
 
   /* 1.3 uses panels, tiles and a small flow chart so each system and each of its parts stands apart */
   const sys=(name,body,tags)=>ent(name,body,tags).replace('<div class="ent">','<div class="ent sys">');
@@ -1652,16 +1612,15 @@ function view(l){
   const day=(title,body)=>`<div class="sub"><h3><span>${title}</span></h3>${body}</div>`;
   B['change-note']=`<p class="sec-intro">${t('Changes made to this GDD, newest day first.','Các thay đổi của tài liệu này, ngày mới nhất ở trên cùng.')}</p>`+
     day('2026-10-25',
+      ent(t('Sections removed','Bỏ bớt mục'),ul([
+        t(`Removed Controls, Levels & difficulty, UI flow and Analytics.`,`Bỏ các mục Điều khiển, Level & độ khó, UI flow và Analytics.`)
+      ]))+
       ent(t('New document','Tài liệu mới'),ul([
         t(`Created this GDD from the template, with the game rules from Train_GDD.md.`,`Tạo tài liệu này từ template, luật chơi lấy từ Train_GDD.md.`),
         t(`Open questions kept open: Q2, Q4, Q12, Q15.`,`Các câu hỏi còn mở được giữ nguyên: Q2, Q4, Q12, Q15.`),
         t(`Numbers not in Train_GDD.md are marked TBD until the config sheet exists.`,`Các con số không có trong Train_GDD.md được ghi TBD cho tới khi có sheet config.`)
       ])));
 
-  /* ===== Analytics ===== */
-  B['analytics']=`<p class="sec-intro">${t('Events and KPIs the team tracks.','Các event và KPI cần theo dõi.')}</p>`+
-    ent(t('Events','Event'),ul([t(`Not in the GDD yet: TBD.`,`Chưa có trong GDD: TBD.`)]))+
-    ent('KPI',ul([t(`Not in the GDD yet: TBD.`,`Chưa có trong GDD: TBD.`)]));
 
   /* ----- hero ----- */
   /* PER GAME: one legend row per part of the play-screen sketch (A to E), matching the part-A … part-E groups in fieldSVG */
