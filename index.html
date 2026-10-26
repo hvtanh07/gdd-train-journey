@@ -1409,14 +1409,14 @@ function view(l){
      then give it a detail entry (6.5, 6.6 or section 7) only if its rules don't fit in one row. */
   B['iap--offers']=`<p class="sec-intro">${t(`Packs and every popup that offers something (money, coins or rewarded ad). Keep 6.1 and 6.2 up to date. Unlock levels are remote config.`,
     `Các gói và mọi popup mời nhận ưu đãi (tiền, xu hoặc quảng cáo có thưởng). Luôn cập nhật mục 6.1 và 6.2. Màn mở khóa nằm trong cấu hình từ xa.`)}</p>`+
-    `<p class="note">${t(`Prices, amounts, timers and unlock levels use the shared template defaults. Confirm them for Train Journey.`,`Giá, số lượng, thời gian và màn mở khóa dùng giá trị mặc định của template chung. Cần xác nhận lại cho Train Journey.`)}</p>`;
+    `<p class="note">${t(`Pack contents and prices come from the Train Journey pack sheet. Timers and unlock levels use the shared template defaults: confirm them for Train Journey.`,`Nội dung và giá các gói lấy từ sheet gói của Train Journey. Thời gian và màn mở khóa dùng giá trị mặc định của template chung: cần xác nhận lại cho Train Journey.`)}</p>`;
   const pid=s=>`<code>${PID}_${s}</code>`;
   const see=(id,n)=>`<a href="#${id}">${n}</a>`;
   const bx=n=>t(`${n}× each booster`,`Mỗi công cụ ×${n}`);
   const hr=n=>t(`${n} hour${n>1?'s':''}`,`${n} giờ`);
   const packs=[
     [t('Remove Ads','Gỡ quảng cáo')],
-    ['Remove Ads Pack',pid('removeads'),'2,500',bx(1),dash,t('No interstitial and banner ads, forever','Gỡ vĩnh viễn quảng cáo xen kẽ và banner'),'$5.99'],
+    ['Remove Ads Pack',pid('removeads'),'2,500',dash,dash,t('Remove Ads + Play Offline','Gỡ quảng cáo + Chơi offline'),'$7.99'],
     [t('Limited Time Pack','Gói giới hạn thời gian')],
     ['Starter Pack',pid('starterpack'),'2,500',bx(2),hr(2),dash,'$1.99'],
     [t('Special Pack','Gói đặc biệt')],
@@ -1426,12 +1426,12 @@ function view(l){
     [t('Gold Pack','Gói vàng')],
     ['1,000 Gold',pid('1000coins'),'1,000',dash,dash,dash,'$1.99'],
     ['5,000 Gold',pid('5000coins'),'5,000',dash,dash,dash,'$4.99'],
-    ['11,500 Gold',pid('11500coins'),'11,500',dash,dash,dash,tbd],
-    ['30,000 Gold',pid('30000coins'),'30,000',dash,dash,dash,tbd],
-    ['70,000 Gold',pid('70000coins'),'70,000',dash,dash,dash,tbd],
-    ['150,000 Gold',pid('150000coins'),'150,000',dash,dash,dash,tbd],
-    [t('Free Package','Gói miễn phí')],
-    ['200 Gold',dash,'200',dash,dash,dash,t('Free','Miễn phí')]
+    ['11,500 Gold',pid('11500coins'),'11,500',dash,dash,dash,'$9.99'],
+    ['30,000 Gold',pid('30000coins'),'30,000',dash,dash,dash,'$24.99'],
+    ['70,000 Gold',pid('70000coins'),'70,000',dash,dash,dash,'$49.99'],
+    ['150,000 Gold',pid('150000coins'),'150,000',dash,dash,dash,'$99.99'],
+    ['First-Class Package'],
+    ['200 Gold',dash,'200',t('1 booster','1 công cụ'),dash,dash,t('Rewarded ad','Quảng cáo có thưởng')]
   ];
   const NUMC={2:1,6:1};
   const packHead=[t('Pack','Gói'),'ID',t('Gold','Vàng'),t('Boosters','Công cụ hỗ trợ'),t('Unlimited lives','Tim vô hạn'),t('Other benefit','Lợi ích khác'),t('Price (USD)','Giá (USD)')];
@@ -1509,8 +1509,8 @@ function view(l){
 
   B['remove-ads']=
     sys(nm('Remove Ads','Gỡ quảng cáo'),
-      lead(t(`Removes interstitial and banner ads forever. Rewarded ads stay.`,`Gỡ vĩnh viễn quảng cáo xen kẽ và banner. Quảng cáo có thưởng vẫn giữ.`))+
-      tiles([[t('No ads','Không QC'),t('Interstitials and banners','Xen kẽ và banner')],['2,500',t('Gold','Vàng')],['1×',t('Each booster','Mỗi công cụ')],['$5.99',t('Price','Giá'),'hot']])+
+      lead(t(`Removes interstitial and banner ads forever and lets the player play offline. Rewarded ads stay.`,`Gỡ vĩnh viễn quảng cáo xen kẽ và banner, và cho phép chơi offline. Quảng cáo có thưởng vẫn giữ.`))+
+      tiles([[t('No ads','Không QC'),t('Interstitials and banners','Xen kẽ và banner')],[t('Offline','Offline'),t('Play offline','Chơi offline')],['2,500',t('Gold','Vàng')],['$7.99',t('Price','Giá'),'hot']])+
       panel(t('Popup schedule','Lịch hiện popup'),
         table(t('Remove Ads popup schedule','Lịch hiện popup Gỡ quảng cáo'),[t('Popup','Lần hiện'),t('Shows after','Hiện sau'),t('Limit','Giới hạn')],[
           [t('1st','Lần 1'),t('1st interstitial past level 15','Quảng cáo xen kẽ đầu tiên sau màn 15'),t('Once','1 lần')],
@@ -1561,6 +1561,11 @@ function view(l){
   const day=(title,body)=>`<div class="sub"><h3><span>${title}</span></h3>${body}</div>`;
   B['change-note']=`<p class="sec-intro">${t('Changes made to this GDD, newest day first.','Các thay đổi của tài liệu này, ngày mới nhất ở trên cùng.')}</p>`+
     day('2026-10-26',
+      ent(t('Pack sheet values','Giá trị theo sheet gói'),ul([
+        t(`Remove Ads Pack: $7.99, 2,500 Gold, no boosters, and it also unlocks offline play.`,`Gói Gỡ quảng cáo: $7.99, 2.500 vàng, không có công cụ, và cho phép chơi offline.`),
+        t(`Gold pack prices: 11,500 → $9.99, 30,000 → $24.99, 70,000 → $49.99, 150,000 → $99.99.`,`Giá gói vàng: 11.500 → $9.99, 30.000 → $24.99, 70.000 → $49.99, 150.000 → $99.99.`),
+        t(`The free 200 Gold row is now the First-Class Package: 200 Gold + 1 booster for a rewarded ad.`,`Dòng 200 vàng miễn phí giờ là First-Class Package: 200 vàng + 1 công cụ, đổi bằng quảng cáo có thưởng.`)
+      ]))+
       ent(t('Economy and live ops values','Giá trị kinh tế và live ops'),ul([
         t(`Sections 6 and 7 now use the shared template values: pack contents and prices, unlock levels (Starter Pack 12, Remove Ads 15, Limited Time Reward 10), timers (72 h, 4 h, 10 min), Remove Ads popup schedule and daily limits (3).`,`Mục 6 và 7 giờ dùng giá trị của template chung: nội dung và giá các gói, màn mở khóa (Gói Khởi đầu 12, Gỡ quảng cáo 15, Quà giới hạn thời gian 10), thời gian (72 giờ, 4 giờ, 10 phút), lịch popup Gỡ quảng cáo và giới hạn mỗi ngày (3).`),
         t(`Pack sheet: Remove Ads gives 2,500 Gold, and a Free Package row (200 Gold, no product ID) is added.`,`Theo sheet gói: Gỡ quảng cáo cho 2.500 vàng, thêm dòng Gói miễn phí (200 vàng, không có mã sản phẩm).`),
