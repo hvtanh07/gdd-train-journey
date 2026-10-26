@@ -1362,7 +1362,10 @@ function view(l){
   B['remote-config']=`<p class="sec-intro">${t(
       `Values the team can change without releasing a new build.`,
       `Các thông số mà đội có thể chỉnh mà không cần phát hành bản game mới.`)}</p>`+
-    `<p class="note">${t(`Values follow the shared template defaults, except lives (from Train_GDD.md) and level loop back (40, 21). Confirm them for Train Journey.`,`Các giá trị theo mặc định của template chung, trừ phần mạng (lấy từ Train_GDD.md) và lặp lại màn (40, 21). Cần xác nhận lại cho Train Journey.`)}</p>`+
+    `<p class="note">${t(`Values follow the shared template defaults, except tickets and lives (from Train_GDD.md) and level loop back (40, 21). Confirm them for Train Journey.`,`Các giá trị theo mặc định của template chung, trừ ticket và mạng (lấy từ Train_GDD.md) và lặp lại màn (40, 21). Cần xác nhận lại cho Train Journey.`)}</p>`+
+    rc(t('Gameplay','Gameplay'),[
+      ['level_ticket_count',t('Tickets at the start of each level (each tap on a blocked train costs 1)','Số ticket khi bắt đầu mỗi màn (mỗi lần chạm vào tàu bị chặn mất 1)'),'3',t('tickets','ticket')]
+    ])+
     rc(t('Level reward','Thưởng qua màn'),[
       ['level_win_coin',t('Coins for completing a level','Số xu nhận khi hoàn thành màn'),'40',coin],
       ['level_win_ad_multiplier',t('Reward multiplier when the player watches the reward ad','Hệ số nhân thưởng khi người chơi xem quảng cáo thưởng'),'2.0×','×']
@@ -1550,6 +1553,7 @@ function view(l){
   B['change-note']=`<p class="sec-intro">${t('Changes made to this GDD, newest day first.','Các thay đổi của tài liệu này, ngày mới nhất ở trên cùng.')}</p>`+
     day('2026-10-26',
       ent(t('Remote config','Cấu hình từ xa'),ul([
+        t(`Added <code>level_ticket_count</code>: tickets per level, now 3.`,`Thêm <code>level_ticket_count</code>: số ticket mỗi màn, hiện là 3.`),
         t(`Section 5 now uses the shared template’s default values (level reward, revive, lives refill, boosters, unlock levels, live ops limits). They still need to be confirmed for Train Journey.`,`Mục 5 giờ dùng giá trị mặc định của template chung (thưởng qua màn, hồi sinh, nạp mạng, công cụ, màn mở khóa, giới hạn live ops). Vẫn cần xác nhận lại cho Train Journey.`),
         t(`Removed the WIP tag from section 5.`,`Bỏ nhãn WIP ở mục 5.`)
       ])))+
