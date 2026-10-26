@@ -519,7 +519,7 @@ const SECTIONS=[
     {id:'starter-pack',n:'6.5',en:'Starter Pack',vi:'Gói Khởi đầu'},
     {id:'remove-ads',n:'6.6',en:'Remove Ads',vi:'Gỡ quảng cáo'}]},
   {id:'live-ops',n:'7',c:6,en:'Live ops',vi:'Tính năng Live Ops',subs:[
-    {id:'limited-time-reward',n:'7.1',en:'Limited Time Reward',vi:'Quà giới hạn thời gian'},
+    {id:'limited-time-reward',n:'7.1',en:'First-Class Package',vi:'Gói First-Class'},
     {id:'skip-retry',n:'7.2',en:'Skip Level & Retry with Booster',vi:'Bỏ qua màn & Chơi lại kèm công cụ'}]},
   {id:'change-note',n:'8',c:7,en:'Change note',vi:'Ghi chú thay đổi'}
 ];
@@ -1396,7 +1396,7 @@ function view(l){
     rc(t('Unlock popups — offer unlock level','Popup mở khóa — màn mở ưu đãi'),[
       ['starter_pack_unlock_level',t('Starter Pack (IAP) — level from which the offer popup can show','Gói Khởi đầu (IAP) — màn bắt đầu có thể hiện popup ưu đãi'),'12',t('level','màn')],
       ['remove_ads_unlock_level',t('Remove Ads (IAP) — level from which the offer popup can show','Gỡ quảng cáo (IAP) — màn bắt đầu có thể hiện popup ưu đãi'),'15',t('level','màn')],
-      ['garage_gift_unlock_level',t('Limited Time Reward / Garage Gift (rewarded ad) — level from which the gift popup can show','Quà giới hạn thời gian / Garage Gift (quảng cáo thưởng) — màn bắt đầu có thể hiện popup quà'),'10',t('level','màn')]
+      ['garage_gift_unlock_level',t('First-Class Package (rewarded ad) — level from which the gift popup can show','First-Class Package (quảng cáo thưởng) — màn bắt đầu có thể hiện popup quà'),'10',t('level','màn')]
     ])+
     rc(t('Live ops','Live Ops'),[
       ['skip_level_max_per_day',t('Skip Level — max skips per day (ad or coins). The count resets each new day.','Bỏ qua màn — số lần bỏ qua tối đa mỗi ngày (bằng quảng cáo hoặc xu). Số lần được tính lại mỗi ngày mới.'),'3',t('count','lần')],
@@ -1455,7 +1455,7 @@ function view(l){
       t(`Home, after the 1st popup`,`Màn hình chính, sau popup đầu`),
       t(`Always, until bought`,`Luôn có, tới khi mua`),see('remove-ads','6.6')],
     [t('Rewarded-ad and coin popups','Popup quảng cáo có thưởng và xu')],
-    [nm('Limited Time Reward','Quà giới hạn thời gian'),t('Rewarded ad','Quảng cáo có thưởng'),lvl(10),
+    [nm('First-Class Package','Gói First-Class'),t('Rewarded ad','Quảng cáo có thưởng'),lvl(10),
       t(`Session start (priority 2), Home after a win, a win while unclaimed.`,`Khi mở game (ưu tiên 2), về màn hình chính sau khi thắng, thắng khi quà chưa nhận.`),
       t(`Every 4 h. 10 min to claim.`,`Mỗi 4 giờ. 10 phút để nhận.`),
       t(`HUD, while unclaimed`,`HUD, khi quà chưa nhận`),dash,see('limited-time-reward','7.1')],
@@ -1484,7 +1484,7 @@ function view(l){
       `Mỗi lần mở game tối đa một popup. Kiểm tra theo thứ tự, hiện popup đầu tiên thỏa điều kiện.`)}</p>`+
     table(t('Session-start priority','Thứ tự popup khi mở game'),[t('Priority','Ưu tiên'),t('Popup','Popup'),t('Shows if all are true','Hiện khi thỏa tất cả'),t('Otherwise','Nếu không')],[
       ['1',t('Starter Pack','Gói Khởi đầu'),t(`Level ≥ 12 · not bought · inside 72 h`,`Màn ≥ 12 · chưa mua · còn trong 72 giờ`),t('Check 2','Kiểm tra 2')],
-      ['2',t('Limited Time Reward','Quà giới hạn thời gian'),t(`Level ≥ 10 · ≥ 4 h since last gift`,`Màn ≥ 10 · đã qua ≥ 4 giờ từ quà trước`),t('Go to Home','Vào màn hình chính')]
+      ['2',t('First-Class Package','Gói First-Class'),t(`Level ≥ 10 · ≥ 4 h since last gift`,`Màn ≥ 10 · đã qua ≥ 4 giờ từ quà trước`),t('Go to Home','Vào màn hình chính')]
     ],'compact')+
     `<p class="note">${t(`Remove Ads is never checked here. No popups during an FTUE step.`,`Gỡ quảng cáo không nằm trong lượt kiểm tra này. Không popup nào hiện khi đang làm dở FTUE.`)}</p>`;
 
@@ -1529,11 +1529,11 @@ function view(l){
   B['live-ops']=`<p class="sec-intro">${t(`Features that bring players back or help past hard levels, mostly for rewarded ads. Also listed in 6.2.`,
     `Tính năng kéo người chơi quay lại hoặc giúp qua màn khó, phần lớn đổi bằng quảng cáo có thưởng. Cũng có trong mục 6.2.`)}</p>`;
   B['limited-time-reward']=
-    sys(nm('Limited Time Reward','Quà giới hạn thời gian'),
+    sys(nm('First-Class Package','Gói First-Class'),
       lead(t(`A free gift every 4 hours, claimed with a rewarded ad.`,`Quà miễn phí mỗi 4 giờ, nhận bằng quảng cáo có thưởng.`))+
-      tiles([[`200 + 1`,t('Gold + booster (“Gold Brick Package!”)','Vàng + công cụ (“Gold Brick Package!”)')],[t('4 h','4 giờ'),t('Between gifts','Giữa hai lần quà')],[t('10 min','10 phút'),t('To claim','Để nhận quà')],[t('Level 10','Màn 10'),t('Unlocks','Mở khóa')]])+
+      tiles([[`200 + 1`,t('Gold + booster','Vàng + công cụ')],[t('4 h','4 giờ'),t('Between gifts','Giữa hai lần quà')],[t('10 min','10 phút'),t('To claim','Để nhận quà')],[t('Level 10','Màn 10'),t('Unlocks','Mở khóa')]])+
       panel(t('States','Các trạng thái'),
-        table(t('Limited Time Reward states','Trạng thái Quà giới hạn thời gian'),[t('State','Trạng thái'),t('Player sees','Người chơi thấy'),t('Next','Tiếp theo')],[
+        table(t('First-Class Package states','Trạng thái Gói First-Class'),[t('State','Trạng thái'),t('Player sees','Người chơi thấy'),t('Next','Tiếp theo')],[
           [t('Locked','Đang khóa'),t('Nothing. 4 h cooldown runs.','Không có gì. Đang chờ 4 giờ.'),t('Cooldown over + trigger → Available','Hết giờ chờ + có kích hoạt → Sẵn sàng')],
           [t('Available','Sẵn sàng'),t('Popup','Popup'),t('Claim → Claimed · Close → Pending','Nhận → Đã nhận · Đóng → Chờ nhận')],
           [t('Pending','Chờ nhận'),t('HUD icon, 10 min countdown','Biểu tượng HUD, đếm 10 phút'),t('Tap and claim → Claimed · 10 min over → Locked','Chạm và nhận → Đã nhận · Hết 10 phút → Đang khóa')],
@@ -1561,6 +1561,10 @@ function view(l){
   const day=(title,body)=>`<div class="sub"><h3><span>${title}</span></h3>${body}</div>`;
   B['change-note']=`<p class="sec-intro">${t('Changes made to this GDD, newest day first.','Các thay đổi của tài liệu này, ngày mới nhất ở trên cùng.')}</p>`+
     day('2026-10-26',
+      ent(t('Popup naming','Tên popup'),ul([
+        t(`The rewarded-ad gift popup is now called First-Class Package in 6.2, 6.3, 7.1 and remote config, to match the pack list.`,`Popup quà đổi bằng quảng cáo có thưởng giờ tên là First-Class Package ở 6.2, 6.3, 7.1 và cấu hình từ xa, khớp với danh sách gói.`),
+        t(`Popup format and logic re-checked against the shared template: no change needed.`,`Đã đối chiếu lại định dạng và logic popup với template chung: không cần đổi.`)
+      ]))+
       ent(t('Pack sheet values','Giá trị theo sheet gói'),ul([
         t(`Remove Ads Pack: $7.99, 2,500 Gold, no boosters, and it also unlocks offline play.`,`Gói Gỡ quảng cáo: $7.99, 2.500 vàng, không có công cụ, và cho phép chơi offline.`),
         t(`Gold pack prices: 11,500 → $9.99, 30,000 → $24.99, 70,000 → $49.99, 150,000 → $99.99.`,`Giá gói vàng: 11.500 → $9.99, 30.000 → $24.99, 70.000 → $49.99, 150.000 → $99.99.`),
