@@ -1409,25 +1409,29 @@ function view(l){
      then give it a detail entry (6.5, 6.6 or section 7) only if its rules don't fit in one row. */
   B['iap--offers']=`<p class="sec-intro">${t(`Packs and every popup that offers something (money, coins or rewarded ad). Keep 6.1 and 6.2 up to date. Unlock levels are remote config.`,
     `Các gói và mọi popup mời nhận ưu đãi (tiền, xu hoặc quảng cáo có thưởng). Luôn cập nhật mục 6.1 và 6.2. Màn mở khóa nằm trong cấu hình từ xa.`)}</p>`+
-    `<p class="note">${t(`Logic kept from the shared template. Prices, amounts, timers and unlock levels wait for Train Journey’s config sheet: TBD.`,`Logic giữ theo template chung. Giá, số lượng, thời gian và màn mở khóa chờ sheet config của Train Journey: TBD.`)}</p>`;
+    `<p class="note">${t(`Prices, amounts, timers and unlock levels use the shared template defaults. Confirm them for Train Journey.`,`Giá, số lượng, thời gian và màn mở khóa dùng giá trị mặc định của template chung. Cần xác nhận lại cho Train Journey.`)}</p>`;
   const pid=s=>`<code>${PID}_${s}</code>`;
   const see=(id,n)=>`<a href="#${id}">${n}</a>`;
-  const packs=[ /* structure from the template; names, amounts and prices wait for the config sheet */
+  const bx=n=>t(`${n}× each booster`,`Mỗi công cụ ×${n}`);
+  const hr=n=>t(`${n} hour${n>1?'s':''}`,`${n} giờ`);
+  const packs=[
     [t('Remove Ads','Gỡ quảng cáo')],
-    ['Remove Ads Pack',pid('removeads'),tbd,tbd,dash,t('No interstitial and banner ads, forever','Gỡ vĩnh viễn quảng cáo xen kẽ và banner'),tbd],
+    ['Remove Ads Pack',pid('removeads'),'2,500',bx(1),dash,t('No interstitial and banner ads, forever','Gỡ vĩnh viễn quảng cáo xen kẽ và banner'),'$5.99'],
     [t('Limited Time Pack','Gói giới hạn thời gian')],
-    ['Starter Pack',pid('starterpack'),tbd,tbd,tbd,dash,tbd],
+    ['Starter Pack',pid('starterpack'),'2,500',bx(2),hr(2),dash,'$1.99'],
     [t('Special Pack','Gói đặc biệt')],
-    ['Small Pack',pid('smallpack'),tbd,tbd,tbd,dash,tbd],
-    ['Medium Pack',pid('mediumpack'),tbd,tbd,tbd,dash,tbd],
-    ['Ultra Pack',pid('ultrapack'),tbd,tbd,tbd,dash,tbd],
+    ['Small Pack',pid('smallpack'),'2,500',bx(2),hr(1),dash,'$4.99'],
+    ['Medium Pack',pid('mediumpack'),'10,000',bx(5),hr(2),dash,'$9.99'],
+    ['Ultra Pack',pid('ultrapack'),'25,000',bx(10),hr(6),dash,'$24.99'],
     [t('Gold Pack','Gói vàng')],
-    ['1,000 Gold',pid('1000coins'),'1,000',dash,dash,dash,tbd],
-    ['5,000 Gold',pid('5000coins'),'5,000',dash,dash,dash,tbd],
+    ['1,000 Gold',pid('1000coins'),'1,000',dash,dash,dash,'$1.99'],
+    ['5,000 Gold',pid('5000coins'),'5,000',dash,dash,dash,'$4.99'],
     ['11,500 Gold',pid('11500coins'),'11,500',dash,dash,dash,tbd],
     ['30,000 Gold',pid('30000coins'),'30,000',dash,dash,dash,tbd],
     ['70,000 Gold',pid('70000coins'),'70,000',dash,dash,dash,tbd],
-    ['150,000 Gold',pid('150000coins'),'150,000',dash,dash,dash,tbd]
+    ['150,000 Gold',pid('150000coins'),'150,000',dash,dash,dash,tbd],
+    [t('Free Package','Gói miễn phí')],
+    ['200 Gold',dash,'200',dash,dash,dash,t('Free','Miễn phí')]
   ];
   const NUMC={2:1,6:1};
   const packHead=[t('Pack','Gói'),'ID',t('Gold','Vàng'),t('Boosters','Công cụ hỗ trợ'),t('Unlimited lives','Tim vô hạn'),t('Other benefit','Lợi ích khác'),t('Price (USD)','Giá (USD)')];
@@ -1440,33 +1444,33 @@ function view(l){
   /* one row per popup: [name, paid with, unlock, when it shows, repeats & limits, Home/HUD icon, in store, rules] */
   const popRows=[
     [t('IAP popups','Popup IAP')],
-    [nm('Starter Pack','Gói Khởi đầu'),`IAP<br>${pid('starterpack')}`,tbd,
-      t(`Session start, priority 1, while the TBD h window runs.`,`Khi mở game, ưu tiên 1, trong TBD giờ.`),
-      t(`TBD h from the 1st popup. Gone once bought or expired.`,`TBD giờ từ popup đầu. Mất khi đã mua hoặc hết hạn.`),
+    [nm('Starter Pack','Gói Khởi đầu'),`IAP<br>${pid('starterpack')}`,lvl(12),
+      t(`Session start, priority 1, while the 72 h window runs.`,`Khi mở game, ưu tiên 1, trong 72 giờ.`),
+      t(`72 h from the 1st popup. Gone once bought or expired.`,`72 giờ từ popup đầu. Mất khi đã mua hoặc hết hạn.`),
       t(`Home, with countdown`,`Màn hình chính, kèm đồng hồ`),
-      t(`During the TBD h`,`Trong TBD giờ`),see('starter-pack','6.5')],
-    [nm('Remove Ads','Gỡ quảng cáo'),`IAP<br>${pid('removeads')}`,tbd,
+      t(`During the 72 h`,`Trong 72 giờ`),see('starter-pack','6.5')],
+    [nm('Remove Ads','Gỡ quảng cáo'),`IAP<br>${pid('removeads')}`,lvl(15),
       t(`After interstitial ads (see 6.6). Never at session start.`,`Sau quảng cáo xen kẽ (xem 6.6). Không hiện khi mở game.`),
       t(`Gap grows over time. Stops once bought.`,`Khoảng cách tăng dần. Dừng khi đã mua.`),
       t(`Home, after the 1st popup`,`Màn hình chính, sau popup đầu`),
       t(`Always, until bought`,`Luôn có, tới khi mua`),see('remove-ads','6.6')],
     [t('Rewarded-ad and coin popups','Popup quảng cáo có thưởng và xu')],
-    [nm('Limited Time Reward','Quà giới hạn thời gian'),t('Rewarded ad','Quảng cáo có thưởng'),tbd,
+    [nm('Limited Time Reward','Quà giới hạn thời gian'),t('Rewarded ad','Quảng cáo có thưởng'),lvl(10),
       t(`Session start (priority 2), Home after a win, a win while unclaimed.`,`Khi mở game (ưu tiên 2), về màn hình chính sau khi thắng, thắng khi quà chưa nhận.`),
-      t(`Every TBD h. TBD min to claim.`,`Mỗi TBD giờ. TBD phút để nhận.`),
+      t(`Every 4 h. 10 min to claim.`,`Mỗi 4 giờ. 10 phút để nhận.`),
       t(`HUD, while unclaimed`,`HUD, khi quà chưa nhận`),dash,see('limited-time-reward','7.1')],
-    [nm('Skip Level','Bỏ qua màn'),t('Rewarded ad or coins','Quảng cáo có thưởng hoặc xu'),tbd,
-      t(`Lose screen, TBD fails in a row on the same level.`,`Màn hình thua, thua TBD lần liên tiếp cùng một màn.`),
-      t(`TBD a day`,`TBD lần/ngày`),dash,dash,see('skip-retry','7.2')],
+    [nm('Skip Level','Bỏ qua màn'),t('Rewarded ad or coins','Quảng cáo có thưởng hoặc xu'),lvl('X'),
+      t(`Lose screen, 3 fails in a row on the same level.`,`Màn hình thua, thua 3 lần liên tiếp cùng một màn.`),
+      t(`3 a day`,`3 lần/ngày`),dash,dash,see('skip-retry','7.2')],
     [nm('Retry with Booster','Chơi lại kèm công cụ'),t('Rewarded ad','Quảng cáo có thưởng'),t(`${P.bo3} unlock`,`Mở ${P.bo3}`),
       t(`Restarting a level with 0 ${P.bo3}.`,`Chơi lại một màn khi có 0 ${P.bo3}.`),
-      t(`TBD a day`,`TBD lần/ngày`),dash,dash,see('skip-retry','7.2')],
+      t(`3 a day`,`3 lần/ngày`),dash,dash,see('skip-retry','7.2')],
     [nm('Revive','Hồi sinh'),t('Coins or rewarded ad','Xu hoặc quảng cáo có thưởng'),t('Always','Luôn có'),
       t(`The moment the player runs out of tickets.`,`Ngay khi người chơi hết ticket.`),
-      t(`TBD ad revive per attempt`,`TBD lần bằng quảng cáo mỗi lượt`),dash,dash,see('additional-mechanics','1.3')],
+      t(`1 ad revive per attempt`,`1 lần bằng quảng cáo mỗi lượt`),dash,dash,see('additional-mechanics','1.3')],
     [nm('Refill lives','Nạp tim'),t('Coins or rewarded ad','Xu hoặc quảng cáo có thưởng'),t('Always','Luôn có'),
       t(`Starting a level with 0 lives.`,`Bắt đầu màn khi còn 0 tim.`),
-      t(`TBD coins → TBD lives, 1 ad → TBD life`,`TBD xu → TBD tim, 1 quảng cáo → TBD tim`),dash,dash,see('remote-config','5')]
+      t(`900 coins → 5 lives, 1 ad → 1 life`,`900 xu → 5 tim, 1 quảng cáo → 1 tim`),dash,dash,see('remote-config','5')]
   ];
   const popHead=[t('Popup','Popup'),t('Paid with','Trả bằng'),t('Unlock level','Màn mở khóa'),t('When it shows','Khi nào hiện'),t('Repeats & limits','Lặp lại & giới hạn'),t('Icon','Biểu tượng'),t('In store','Trong cửa hàng'),t('Rules','Quy tắc')];
   B['popup-list']=`<p class="sec-intro">${t(`Every offer popup. Use it as the checklist when adding or changing one.`,
@@ -1479,8 +1483,8 @@ function view(l){
     `<p class="sec-intro">${t(`At most one popup per game open. Check in order, show the first that passes.`,
       `Mỗi lần mở game tối đa một popup. Kiểm tra theo thứ tự, hiện popup đầu tiên thỏa điều kiện.`)}</p>`+
     table(t('Session-start priority','Thứ tự popup khi mở game'),[t('Priority','Ưu tiên'),t('Popup','Popup'),t('Shows if all are true','Hiện khi thỏa tất cả'),t('Otherwise','Nếu không')],[
-      ['1',t('Starter Pack','Gói Khởi đầu'),t(`Level ≥ TBD · not bought · inside TBD h`,`Màn ≥ TBD · chưa mua · còn trong TBD giờ`),t('Check 2','Kiểm tra 2')],
-      ['2',t('Limited Time Reward','Quà giới hạn thời gian'),t(`Level ≥ TBD · ≥ TBD h since last gift`,`Màn ≥ TBD · đã qua ≥ TBD giờ từ quà trước`),t('Go to Home','Vào màn hình chính')]
+      ['1',t('Starter Pack','Gói Khởi đầu'),t(`Level ≥ 12 · not bought · inside 72 h`,`Màn ≥ 12 · chưa mua · còn trong 72 giờ`),t('Check 2','Kiểm tra 2')],
+      ['2',t('Limited Time Reward','Quà giới hạn thời gian'),t(`Level ≥ 10 · ≥ 4 h since last gift`,`Màn ≥ 10 · đã qua ≥ 4 giờ từ quà trước`),t('Go to Home','Vào màn hình chính')]
     ],'compact')+
     `<p class="note">${t(`Remove Ads is never checked here. No popups during an FTUE step.`,`Gỡ quảng cáo không nằm trong lượt kiểm tra này. Không popup nào hiện khi đang làm dở FTUE.`)}</p>`;
 
@@ -1495,26 +1499,26 @@ function view(l){
 
   B['starter-pack']=
     sys(nm('Starter Pack','Gói Khởi đầu'),
-      lead(t(`One-time, low-price pack for first buyers, shown as “TBD% OFF – Limited Time”.`,`Gói giá rẻ mua một lần cho người mua lần đầu, hiện là “TBD% OFF – Limited Time”.`))+
-      tiles([['TBD',t('Gold','Vàng')],['TBD',t('Each booster','Mỗi công cụ')],['TBD',t('Unlimited lives','Tim vô hạn')],['TBD',t('Price','Giá'),'hot']])+
+      lead(t(`One-time, low-price pack for first buyers, shown as “60% OFF – Limited Time”.`,`Gói giá rẻ mua một lần cho người mua lần đầu, hiện là “60% OFF – Limited Time”.`))+
+      tiles([['2,500',t('Gold','Vàng')],['2×',t('Each booster','Mỗi công cụ')],[t('2 h','2 giờ'),t('Unlimited lives','Tim vô hạn')],['$1.99',t('Price','Giá'),'hot']])+
       kv([
-        [t('Why a deal','Vì sao hời'),t(`Clearly more than the cheapest Gold pack and the Small Pack for its price. Comparison waits for prices: TBD.`,`Cho nhiều hơn hẳn gói vàng rẻ nhất và Gói Nhỏ so với giá. Phần so sánh chờ có giá: TBD.`)],
-        [t('Lifecycle','Vòng đời'),`<span class="chips"><span>${t('Open game at level ≥ TBD','Mở game ở màn ≥ TBD')}</span><span>→ ${t('1st popup, TBD h starts','Popup đầu, bắt đầu TBD giờ')}</span><span>→ ${t('Popup each session start, Home icon, store entry','Popup mỗi lần mở game, biểu tượng, mục cửa hàng')}</span><span>→ ${t('Bought or TBD h over: gone for good','Đã mua hoặc hết TBD giờ: mất hẳn')}</span></span>`],
+        [t('Why a deal','Vì sao hời'),t(`Same price as 1,000 Gold, 2.5× the gold plus boosters. Small Pack content at 40% of its price.`,`Cùng giá gói 1.000 vàng nhưng gấp 2,5 lần vàng, thêm công cụ. Nội dung như Gói Nhỏ với 40% giá.`)],
+        [t('Lifecycle','Vòng đời'),`<span class="chips"><span>${t('Open game at level ≥ 12','Mở game ở màn ≥ 12')}</span><span>→ ${t('1st popup, 72 h starts','Popup đầu, bắt đầu 72 giờ')}</span><span>→ ${t('Popup each session start, Home icon, store entry','Popup mỗi lần mở game, biểu tượng, mục cửa hàng')}</span><span>→ ${t('Bought or 72 h over: gone for good','Đã mua hoặc hết 72 giờ: mất hẳn')}</span></span>`],
         [t('Product ID','Mã sản phẩm'),pid('starterpack')]
       ]));
 
   B['remove-ads']=
     sys(nm('Remove Ads','Gỡ quảng cáo'),
       lead(t(`Removes interstitial and banner ads forever. Rewarded ads stay.`,`Gỡ vĩnh viễn quảng cáo xen kẽ và banner. Quảng cáo có thưởng vẫn giữ.`))+
-      tiles([[t('No ads','Không QC'),t('Interstitials and banners','Xen kẽ và banner')],['TBD',t('Gold','Vàng')],['TBD',t('Each booster','Mỗi công cụ')],['TBD',t('Price','Giá'),'hot']])+
+      tiles([[t('No ads','Không QC'),t('Interstitials and banners','Xen kẽ và banner')],['2,500',t('Gold','Vàng')],['1×',t('Each booster','Mỗi công cụ')],['$5.99',t('Price','Giá'),'hot']])+
       panel(t('Popup schedule','Lịch hiện popup'),
         table(t('Remove Ads popup schedule','Lịch hiện popup Gỡ quảng cáo'),[t('Popup','Lần hiện'),t('Shows after','Hiện sau'),t('Limit','Giới hạn')],[
-          [t('1st','Lần 1'),t('1st interstitial past level TBD','Quảng cáo xen kẽ đầu tiên sau màn TBD'),t('Once','1 lần')],
-          [t('Next TBD times','TBD lần tiếp theo'),t('Every TBD interstitials','Mỗi TBD quảng cáo xen kẽ'),t('TBD min cooldown or new session','Chờ TBD phút hoặc phiên mới')],
-          [t('After that','Sau đó'),t('Every TBD interstitials','Mỗi TBD quảng cáo xen kẽ'),t('TBD a day (resets after 24 h)','TBD lần/ngày (tính lại sau 24 giờ)')]
+          [t('1st','Lần 1'),t('1st interstitial past level 15','Quảng cáo xen kẽ đầu tiên sau màn 15'),t('Once','1 lần')],
+          [t('2nd–4th','Lần 2–4'),t('Every 4 interstitials','Mỗi 4 quảng cáo xen kẽ'),t('20 min cooldown or new session','Chờ 20 phút hoặc phiên mới')],
+          [t('5th +','Từ lần 5'),t('Every 8 interstitials','Mỗi 8 quảng cáo xen kẽ'),t('2 a day (resets after 24 h)','2 lần/ngày (tính lại sau 24 giờ)')]
         ],'compact'))+
       kv([
-        [t('Store','Cửa hàng'),t(`Always, even before the unlock level. Bought first: popup never shows. Home icon after the 1st popup.`,`Luôn có, kể cả trước màn mở khóa. Mua trước: popup không bao giờ hiện. Biểu tượng ở màn hình chính sau popup đầu.`)],
+        [t('Store','Cửa hàng'),t(`Always, even before level 15. Bought first: popup never shows. Home icon after the 1st popup.`,`Luôn có, kể cả trước màn 15. Mua trước: popup không bao giờ hiện. Biểu tượng ở màn hình chính sau popup đầu.`)],
         [t('Bought','Đã mua'),t(`Popup, icon and store entry hide. No expiry.`,`Ẩn popup, biểu tượng và mục cửa hàng. Không hết hạn.`)],
         [t('Restore','Khôi phục'),t(`Non-consumable: Restore Purchases in Settings and Store.`,`Mua một lần dùng mãi: nút Khôi phục giao dịch trong Cài đặt và Cửa hàng.`)],
         [t('Product ID','Mã sản phẩm'),pid('removeads')]
@@ -1526,14 +1530,14 @@ function view(l){
     `Tính năng kéo người chơi quay lại hoặc giúp qua màn khó, phần lớn đổi bằng quảng cáo có thưởng. Cũng có trong mục 6.2.`)}</p>`;
   B['limited-time-reward']=
     sys(nm('Limited Time Reward','Quà giới hạn thời gian'),
-      lead(t(`A free gift every TBD hours, claimed with a rewarded ad.`,`Quà miễn phí mỗi TBD giờ, nhận bằng quảng cáo có thưởng.`))+
-      tiles([['TBD',t('Gold + booster (“Gold Brick Package!”)','Vàng + công cụ (“Gold Brick Package!”)')],['TBD',t('Between gifts','Giữa hai lần quà')],['TBD',t('To claim','Để nhận quà')],['TBD',t('Unlocks','Mở khóa')]])+
+      lead(t(`A free gift every 4 hours, claimed with a rewarded ad.`,`Quà miễn phí mỗi 4 giờ, nhận bằng quảng cáo có thưởng.`))+
+      tiles([[`200 + 1`,t('Gold + booster (“Gold Brick Package!”)','Vàng + công cụ (“Gold Brick Package!”)')],[t('4 h','4 giờ'),t('Between gifts','Giữa hai lần quà')],[t('10 min','10 phút'),t('To claim','Để nhận quà')],[t('Level 10','Màn 10'),t('Unlocks','Mở khóa')]])+
       panel(t('States','Các trạng thái'),
         table(t('Limited Time Reward states','Trạng thái Quà giới hạn thời gian'),[t('State','Trạng thái'),t('Player sees','Người chơi thấy'),t('Next','Tiếp theo')],[
-          [t('Locked','Đang khóa'),t('Nothing. TBD h cooldown runs.','Không có gì. Đang chờ TBD giờ.'),t('Cooldown over + trigger → Available','Hết giờ chờ + có kích hoạt → Sẵn sàng')],
+          [t('Locked','Đang khóa'),t('Nothing. 4 h cooldown runs.','Không có gì. Đang chờ 4 giờ.'),t('Cooldown over + trigger → Available','Hết giờ chờ + có kích hoạt → Sẵn sàng')],
           [t('Available','Sẵn sàng'),t('Popup','Popup'),t('Claim → Claimed · Close → Pending','Nhận → Đã nhận · Đóng → Chờ nhận')],
-          [t('Pending','Chờ nhận'),t('HUD icon, TBD min countdown','Biểu tượng HUD, đếm TBD phút'),t('Tap and claim → Claimed · TBD min over → Locked','Chạm và nhận → Đã nhận · Hết TBD phút → Đang khóa')],
-          [t('Claimed','Đã nhận'),t('Reward animation','Hiệu ứng nhận thưởng'),t('→ Locked (new TBD h)','→ Đang khóa (TBD giờ mới)')]
+          [t('Pending','Chờ nhận'),t('HUD icon, 10 min countdown','Biểu tượng HUD, đếm 10 phút'),t('Tap and claim → Claimed · 10 min over → Locked','Chạm và nhận → Đã nhận · Hết 10 phút → Đang khóa')],
+          [t('Claimed','Đã nhận'),t('Reward animation','Hiệu ứng nhận thưởng'),t('→ Locked (new 4 h)','→ Đang khóa (4 giờ mới)')]
         ],'compact')+
         `<p>${t(`<b>Triggers:</b> session start (6.3), Home after a win, a win while Pending.`,`<b>Kích hoạt:</b> mở game (6.3), về màn hình chính sau khi thắng, thắng khi đang Chờ nhận.`)}</p>`+
         `<p>${t(`<b>Ad fails:</b> no reward, state unchanged. Not sold in the store.`,`<b>Quảng cáo lỗi:</b> không có quà, giữ nguyên trạng thái. Không bán trong cửa hàng.`)}</p>`));
@@ -1543,10 +1547,10 @@ function view(l){
     table(t('Skip Level and Retry with Booster','Bỏ qua màn và Chơi lại kèm công cụ'),
       ['',nm('Skip Level','Bỏ qua màn'),nm('Retry with Booster','Chơi lại kèm công cụ')],[
       [t('Unlock','Mở khóa'),t('Level X (remote config, TBD)','Màn X (cấu hình từ xa, chưa chốt)'),t(`${P.bo3} unlocks`,`Khi mở ${P.bo3}`)],
-      [t('Shows when','Khi nào hiện'),t('Lose screen, after TBD fails in a row on the same level (resets on win or skip)','Màn hình thua, sau TBD lần thua liên tiếp cùng một màn (tính lại khi thắng hoặc bỏ qua)'),t(`Restarting a level (lose screen or restart button) with 0 ${P.bo3}, before the level starts`,`Chơi lại một màn (màn hình thua hoặc nút chơi lại) khi có 0 ${P.bo3}, trước khi màn bắt đầu`)],
+      [t('Shows when','Khi nào hiện'),t('Lose screen, after 3 fails in a row on the same level (resets on win or skip)','Màn hình thua, sau 3 lần thua liên tiếp cùng một màn (tính lại khi thắng hoặc bỏ qua)'),t(`Restarting a level (lose screen or restart button) with 0 ${P.bo3}, before the level starts`,`Chơi lại một màn (màn hình thua hoặc nút chơi lại) khi có 0 ${P.bo3}, trước khi màn bắt đầu`)],
       [t('Cost','Chi phí'),t('1 rewarded ad or coins (remote config)','1 quảng cáo có thưởng hoặc xu (cấu hình từ xa)'),t('1 rewarded ad','1 quảng cáo có thưởng')],
       [t('Result','Kết quả'),t('Level counts as done. No coins, no bonus. Counts toward element unlock. No life lost.','Màn tính là đã qua. Không xu, không thưởng thêm. Vẫn tính vào thanh mở khóa yếu tố. Không mất tim.'),t(`Restart with 1 free ${P.bo3} selected. Not from inventory, lost if unused. Restart still costs 1 life.`,`Chơi lại với 1 ${P.bo3} miễn phí đã chọn sẵn. Không trừ kho, mất nếu không dùng. Chơi lại vẫn tốn 1 tim.`)],
-      [t('Daily limit','Giới hạn ngày'),'<code>skip_level_max_per_day</code> = TBD','<code>retry_booster_max_per_day</code> = TBD'],
+      [t('Daily limit','Giới hạn ngày'),'<code>skip_level_max_per_day</code> = 3','<code>retry_booster_max_per_day</code> = 3'],
       [t('Not allowed','Không áp dụng'),t('FTUE levels, levels that introduce an element or booster','Màn FTUE, màn giới thiệu yếu tố hoặc công cụ'),dash],
       [t('Ad fails or closed','Quảng cáo lỗi hoặc bị đóng'),t('No skip, stay on lose screen, not counted','Không bỏ qua, ở lại màn hình thua, không tính lượt'),t('Normal restart, not counted','Chơi lại bình thường, không tính lượt')]
     ],'wide')+
@@ -1557,6 +1561,11 @@ function view(l){
   const day=(title,body)=>`<div class="sub"><h3><span>${title}</span></h3>${body}</div>`;
   B['change-note']=`<p class="sec-intro">${t('Changes made to this GDD, newest day first.','Các thay đổi của tài liệu này, ngày mới nhất ở trên cùng.')}</p>`+
     day('2026-10-26',
+      ent(t('Economy and live ops values','Giá trị kinh tế và live ops'),ul([
+        t(`Sections 6 and 7 now use the shared template values: pack contents and prices, unlock levels (Starter Pack 12, Remove Ads 15, Limited Time Reward 10), timers (72 h, 4 h, 10 min), Remove Ads popup schedule and daily limits (3).`,`Mục 6 và 7 giờ dùng giá trị của template chung: nội dung và giá các gói, màn mở khóa (Gói Khởi đầu 12, Gỡ quảng cáo 15, Quà giới hạn thời gian 10), thời gian (72 giờ, 4 giờ, 10 phút), lịch popup Gỡ quảng cáo và giới hạn mỗi ngày (3).`),
+        t(`Pack sheet: Remove Ads gives 2,500 Gold, and a Free Package row (200 Gold, no product ID) is added.`,`Theo sheet gói: Gỡ quảng cáo cho 2.500 vàng, thêm dòng Gói miễn phí (200 vàng, không có mã sản phẩm).`),
+        t(`Prices of the 11,500 to 150,000 Gold packs have no template value and stay TBD.`,`Giá các gói 11.500 tới 150.000 vàng không có trong template nên vẫn ghi TBD.`)
+      ]))+
       ent(t('IAP product IDs','Mã sản phẩm IAP'),ul([
         t(`Product IDs in 6.1 now use the <code>ry_</code> prefix (for example <code>ry_removeads</code>, <code>ry_starterpack</code>).`,`Mã sản phẩm ở mục 6.1 giờ dùng tiền tố <code>ry_</code> (ví dụ <code>ry_removeads</code>, <code>ry_starterpack</code>).`),
         t(`The Gold pack row is split into 6 packs: 1,000 to 150,000 Gold.`,`Dòng gói vàng được tách thành 6 gói: từ 1.000 tới 150.000 vàng.`)
