@@ -510,7 +510,7 @@ const SECTIONS=[
     {id:'element-object-concept',n:'3.3',en:'Element objects',vi:'Đối tượng yếu tố đặc biệt',wip:true},
     {id:'booster-object-concept',n:'3.4',en:'Booster objects',vi:'Đối tượng công cụ hỗ trợ',wip:true}]},
   {id:'sfx--haptics',n:'4',c:4,en:'SFX & haptics',vi:'Âm thanh & rung'},
-  {id:'remote-config',n:'5',c:5,en:'Remote config',vi:'Cấu hình từ xa',wip:true},
+  {id:'remote-config',n:'5',c:5,en:'Remote config',vi:'Cấu hình từ xa'},
   {id:'iap--offers',n:'6',c:8,en:'Economy & IAP',vi:'Kinh tế & IAP',subs:[
     {id:'pack-list',n:'6.1',en:'Pack list',vi:'Danh sách gói'},
     {id:'popup-list',n:'6.2',en:'Popup list',vi:'Danh sách popup'},
@@ -1354,24 +1354,23 @@ function view(l){
     rows.map(([k,d,v,u])=>[`<code lang="en">${k}</code>`,d,v,u])));
   const coin=t('coin','xu'),coins=t('coins','xu'),lives=t('lives','mạng'),boosters=t('boosters','công cụ');
   const cost=u=>`${t('cost','giá')} · ${u}`,rew=u=>`${t('reward','thưởng')} · ${u}`;
-  const TBD='TBD';
   const boost=(id,en,v,price)=>[
     [`booster_${id}_coin_price`,t(`${en} booster — buy with coins — COST: coins paid`,`Công cụ ${v} — mua bằng xu — GIÁ: số xu phải trả`),price,cost(coins)],
-    [`booster_${id}_coin_amount`,t(`${en} booster — buy with coins — REWARD: boosters given`,`Công cụ ${v} — mua bằng xu — THƯỞNG: số công cụ nhận`),TBD,rew(boosters)],
-    [`booster_${id}_ad_amount`,t(`${en} booster — watch ads — REWARD: boosters given`,`Công cụ ${v} — xem quảng cáo — THƯỞNG: số công cụ nhận`),TBD,rew(boosters)]
+    [`booster_${id}_coin_amount`,t(`${en} booster — buy with coins — REWARD: boosters given`,`Công cụ ${v} — mua bằng xu — THƯỞNG: số công cụ nhận`),'3',rew(boosters)],
+    [`booster_${id}_ad_amount`,t(`${en} booster — watch ads — REWARD: boosters given`,`Công cụ ${v} — xem quảng cáo — THƯỞNG: số công cụ nhận`),'1',rew(boosters)]
   ];
   B['remote-config']=`<p class="sec-intro">${t(
       `Values the team can change without releasing a new build.`,
       `Các thông số mà đội có thể chỉnh mà không cần phát hành bản game mới.`)}</p>`+
-    `<p class="note">${t(`Only the lives values come from Train_GDD.md. Every other value waits for the config sheet: TBD.`,`Chỉ số liệu về mạng lấy từ Train_GDD.md. Các giá trị khác chờ sheet config: TBD.`)}</p>`+
+    `<p class="note">${t(`Values follow the shared template defaults, except lives (from Train_GDD.md) and level loop back (40, 21). Confirm them for Train Journey.`,`Các giá trị theo mặc định của template chung, trừ phần mạng (lấy từ Train_GDD.md) và lặp lại màn (40, 21). Cần xác nhận lại cho Train Journey.`)}</p>`+
     rc(t('Level reward','Thưởng qua màn'),[
-      ['level_win_coin',t('Coins for completing a level','Số xu nhận khi hoàn thành màn'),TBD,coin],
-      ['level_win_ad_multiplier',t('Reward multiplier when the player watches the reward ad','Hệ số nhân thưởng khi người chơi xem quảng cáo thưởng'),TBD,'×']
+      ['level_win_coin',t('Coins for completing a level','Số xu nhận khi hoàn thành màn'),'40',coin],
+      ['level_win_ad_multiplier',t('Reward multiplier when the player watches the reward ad','Hệ số nhân thưởng khi người chơi xem quảng cáo thưởng'),'2.0×','×']
     ])+
     rc(t('Revive','Hồi sinh'),[
-      ['revive_base_cost',t('Coin cost of the 1st revive in an attempt','Số xu cho lần hồi sinh đầu tiên trong một lượt chơi'),TBD,coin],
-      ['revive_cost_growth',t('Revive cost growth (next revive = current cost × this)','Mức tăng giá hồi sinh (lần sau = giá hiện tại × hệ số này)'),TBD,'×'],
-      ['revive_max_ads_per_attempt',t('Max revives by ad in one attempt','Số lần hồi sinh bằng quảng cáo tối đa trong một lượt chơi'),TBD,t('count','lần')]
+      ['revive_base_cost',t('Coin cost of the 1st revive in an attempt','Số xu cho lần hồi sinh đầu tiên trong một lượt chơi'),'900',coin],
+      ['revive_cost_growth',t('Revive cost growth (next revive = current cost × this)','Mức tăng giá hồi sinh (lần sau = giá hiện tại × hệ số này)'),'1.00×','×'],
+      ['revive_max_ads_per_attempt',t('Max revives by ad in one attempt','Số lần hồi sinh bằng quảng cáo tối đa trong một lượt chơi'),'1',t('count','lần')]
     ])+
     rc(t('Level loop back','Lặp lại màn chơi'),[
       ['level_loop_last_level',t('Last level. After it, the game loops back.','Màn cuối cùng. Sau màn này, game quay lại lặp màn.'),'40',t('level','màn')],
@@ -1382,23 +1381,23 @@ function view(l){
       ['life_refill_minutes',t('Minutes to regenerate 1 life','Số phút để hồi 1 mạng'),'20',t('min','phút')]
     ])+
     rc(t('Lives refill — cost and reward (offered at 0 lives)','Nạp mạng — giá và thưởng (hiện khi còn 0 mạng)'),[
-      ['lives_refill_coin_cost',t('Refill with coins — COST: coins paid','Nạp bằng xu — GIÁ: số xu phải trả'),TBD,cost(coins)],
-      ['lives_refill_coin_amount',t('Refill with coins — REWARD: lives given','Nạp bằng xu — THƯỞNG: số mạng nhận'),TBD,rew(lives)],
-      ['lives_refill_ad_amount',t('Refill with ads — REWARD: lives given','Nạp bằng quảng cáo — THƯỞNG: số mạng nhận'),TBD,rew(lives)]
+      ['lives_refill_coin_cost',t('Refill with coins — COST: coins paid','Nạp bằng xu — GIÁ: số xu phải trả'),'900',cost(coins)],
+      ['lives_refill_coin_amount',t('Refill with coins — REWARD: lives given','Nạp bằng xu — THƯỞNG: số mạng nhận'),'5',rew(lives)],
+      ['lives_refill_ad_amount',t('Refill with ads — REWARD: lives given','Nạp bằng quảng cáo — THƯỞNG: số mạng nhận'),'1',rew(lives)]
     ])+
     rc(t('Boosters — cost and reward','Công cụ hỗ trợ — giá và thưởng'),[
-      ...boost('weak','Weak','yếu',TBD),
-      ...boost('medium','Medium','vừa',TBD),
-      ...boost('strong','Strong','mạnh',TBD)
+      ...boost('weak','Weak','yếu','900'),
+      ...boost('medium','Medium','vừa','1,200'),
+      ...boost('strong','Strong','mạnh','1,500')
     ])+
     rc(t('Unlock popups — offer unlock level','Popup mở khóa — màn mở ưu đãi'),[
-      ['starter_pack_unlock_level',t('Starter Pack (IAP) — level from which the offer popup can show','Gói Khởi đầu (IAP) — màn bắt đầu có thể hiện popup ưu đãi'),TBD,t('level','màn')],
-      ['remove_ads_unlock_level',t('Remove Ads (IAP) — level from which the offer popup can show','Gỡ quảng cáo (IAP) — màn bắt đầu có thể hiện popup ưu đãi'),TBD,t('level','màn')],
-      ['garage_gift_unlock_level',t('Limited Time Reward / Garage Gift (rewarded ad) — level from which the gift popup can show','Quà giới hạn thời gian / Garage Gift (quảng cáo thưởng) — màn bắt đầu có thể hiện popup quà'),TBD,t('level','màn')]
+      ['starter_pack_unlock_level',t('Starter Pack (IAP) — level from which the offer popup can show','Gói Khởi đầu (IAP) — màn bắt đầu có thể hiện popup ưu đãi'),'12',t('level','màn')],
+      ['remove_ads_unlock_level',t('Remove Ads (IAP) — level from which the offer popup can show','Gỡ quảng cáo (IAP) — màn bắt đầu có thể hiện popup ưu đãi'),'15',t('level','màn')],
+      ['garage_gift_unlock_level',t('Limited Time Reward / Garage Gift (rewarded ad) — level from which the gift popup can show','Quà giới hạn thời gian / Garage Gift (quảng cáo thưởng) — màn bắt đầu có thể hiện popup quà'),'10',t('level','màn')]
     ])+
     rc(t('Live ops','Live Ops'),[
-      ['skip_level_max_per_day',t('Skip Level — max skips per day (ad or coins). The count resets each new day.','Bỏ qua màn — số lần bỏ qua tối đa mỗi ngày (bằng quảng cáo hoặc xu). Số lần được tính lại mỗi ngày mới.'),TBD,t('count','lần')],
-      ['retry_booster_max_per_day',t('Retry with Booster — max uses per day (rewarded ad). The count resets each new day.','Chơi lại kèm công cụ — số lần dùng tối đa mỗi ngày (quảng cáo có thưởng). Số lần được tính lại mỗi ngày mới.'),TBD,t('count','lần')]
+      ['skip_level_max_per_day',t('Skip Level — max skips per day (ad or coins). The count resets each new day.','Bỏ qua màn — số lần bỏ qua tối đa mỗi ngày (bằng quảng cáo hoặc xu). Số lần được tính lại mỗi ngày mới.'),'3',t('count','lần')],
+      ['retry_booster_max_per_day',t('Retry with Booster — max uses per day (rewarded ad). The count resets each new day.','Chơi lại kèm công cụ — số lần dùng tối đa mỗi ngày (quảng cáo có thưởng). Số lần được tính lại mỗi ngày mới.'),'3',t('count','lần')]
     ]);
 
   /* ===== 6. IAP & offers ===== */
@@ -1549,6 +1548,11 @@ function view(l){
   /* Add one day() block per day, newest first, with one ent per area changed */
   const day=(title,body)=>`<div class="sub"><h3><span>${title}</span></h3>${body}</div>`;
   B['change-note']=`<p class="sec-intro">${t('Changes made to this GDD, newest day first.','Các thay đổi của tài liệu này, ngày mới nhất ở trên cùng.')}</p>`+
+    day('2026-10-26',
+      ent(t('Remote config','Cấu hình từ xa'),ul([
+        t(`Section 5 now uses the shared template’s default values (level reward, revive, lives refill, boosters, unlock levels, live ops limits). They still need to be confirmed for Train Journey.`,`Mục 5 giờ dùng giá trị mặc định của template chung (thưởng qua màn, hồi sinh, nạp mạng, công cụ, màn mở khóa, giới hạn live ops). Vẫn cần xác nhận lại cho Train Journey.`),
+        t(`Removed the WIP tag from section 5.`,`Bỏ nhãn WIP ở mục 5.`)
+      ])))+
     day('2026-10-25',
       ent(t('Shorter template format','Theo format template rút gọn'),ul([
         t(`Level loop back now starts from level 21 (last level 40, 20 levels per loop), as in the template.`,`Lặp lại màn chơi giờ bắt đầu từ màn 21 (màn cuối 40, mỗi vòng 20 màn), theo template.`),
