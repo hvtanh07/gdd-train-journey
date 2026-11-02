@@ -934,11 +934,11 @@ function view(l){
   /* names reused across sections */
   const N={
     el1:nm('Overlap Trains','Tàu chồng nhau'),el2:nm('Dual-Head Train','Tàu hai đầu'),el3:nm('Linked Trains','Tàu liên kết'),
-    bo1:'Remove',bo2:'Erase',bo3:'Highlight'
+    bo1:'Remove',bo2:'Eraser',bo3:'Highlight'
   };
   const P={ /* plain names for running text and tables */
     el1:t('Overlap Trains','Tàu chồng nhau'),el2:t('Dual-Head Train','Tàu hai đầu'),el3:t('Linked Trains','Tàu liên kết'),
-    bo1:'Remove',bo2:'Erase',bo3:'Highlight'
+    bo1:'Remove',bo2:'Eraser',bo3:'Highlight'
   };
   const withEl=t('With elements','Khi gặp yếu tố đặc biệt');
   /* open questions from Train_GDD.md stay open: they are marked, not answered */
@@ -970,7 +970,7 @@ function view(l){
         ['Ticket',t('Per-level allowance for wrong taps (3 per level).','Số lần chạm sai được phép trong một màn (3 mỗi màn).')],
         [nm('Life','Mạng'),t('Limits how often the player can fail and replay (max 5, refills over time).','Giới hạn số lần thua và chơi lại (tối đa 5, tự hồi theo thời gian).')],
         [nm('Element','Yếu tố đặc biệt'),t(`A special train type unlocked at a later level (${P.el1}, ${P.el2}, ${P.el3}).`,`Loại tàu đặc biệt mở ở màn sau (${P.el1}, ${P.el2}, ${P.el3}).`)],
-        ['Booster',t('A consumable helper item (Remove, Erase, Highlight).','Vật phẩm hỗ trợ dùng một lần (Remove, Erase, Highlight).')]
+        ['Booster',t('A consumable helper item (Remove, Eraser, Highlight).','Vật phẩm hỗ trợ dùng một lần (Remove, Eraser, Highlight).')]
       ],'compact'));
 
   B['main-game-mechanics']=
@@ -1148,6 +1148,12 @@ function view(l){
           [t('Rewarded ad','Quảng cáo có thưởng'),t('Free','Miễn phí'),t(`<code>revive_max_ads_per_attempt</code> (TBD), then hidden`,`<code>revive_max_ads_per_attempt</code> (TBD), sau đó ẩn`)],
           [t('Give up','Bỏ cuộc'),dash,t('→ Lose screen','→ Màn hình thua')]
         ],'compact'))+
+      panel(t('First-time losing','Thua lần đầu'),ul([
+        t(`The first time the player runs out of tickets in the game, the revive popup offers a free revive: no coins, no ad.`,`Lần đầu tiên người chơi hết ticket trong game, popup hồi sinh mời hồi sinh miễn phí: không tốn xu, không xem quảng cáo.`),
+        t(`Only once per player. After that, every revive uses the normal options above.`,`Chỉ 1 lần cho mỗi người chơi. Sau đó, mọi lần hồi sinh dùng các lựa chọn bình thường ở trên.`),
+        t(`Same result as a normal revive: continue from where it stopped, tickets refilled to 3. It does not count toward <code>revive_max_ads_per_attempt</code> or the coin price.`,`Kết quả như hồi sinh thường: chơi tiếp từ chỗ dừng, nạp lại đủ 3 ticket. Không tính vào <code>revive_max_ads_per_attempt</code> hay giá xu.`),
+        t(`If the player gives up instead, the free offer is used up.`,`Nếu người chơi bỏ cuộc, lượt miễn phí cũng mất.`)
+      ])+`<p class="note">${t(`“Used up when the player gives up” is an assumption: confirm.`,`“Bỏ cuộc thì mất lượt miễn phí” là giả định: cần xác nhận.`)}</p>`)+
       panel(t('On revive','Khi hồi sinh'),ul([
         t(`Continue from where it stopped. No restart, no life lost.`,`Chơi tiếp từ chỗ dừng. Không chơi lại, không mất tim.`),
         t(`Tickets are refilled to 3.`,`Ticket được nạp lại đủ 3.`),
@@ -1216,7 +1222,7 @@ function view(l){
     ent(N.bo2,ul([
       t(`The player selects any train and it is removed from the board.`,`Người chơi chọn bất kỳ tàu nào và tàu đó bị lấy khỏi bàn chơi.`),
       t(`The train disappears immediately in place. It does not move out of the board.`,`Tàu biến mất ngay tại chỗ, không chạy ra khỏi bàn chơi.`),
-      t(`How Erase treats elements is not in the GDD yet: TBD.`,`Erase xử lý các yếu tố đặc biệt thế nào thì GDD chưa nói: TBD.`)
+      t(`How Eraser treats elements is not in the GDD yet: TBD.`,`Eraser xử lý các yếu tố đặc biệt thế nào thì GDD chưa nói: TBD.`)
     ]),unlockB(5),demo('erase'))+
     ent(N.bo3,ul([
       t(`The game draws a straight line from the head of every train on the board, in that train’s direction.`,`Trò chơi vẽ một đường thẳng từ đầu của mọi tàu trên bàn chơi, theo hướng của tàu đó.`),
@@ -1469,7 +1475,7 @@ function view(l){
     [nm('Revive','Hồi sinh'),t('Coins or rewarded ad','Xu hoặc quảng cáo có thưởng'),t('Always','Luôn có'),
       t(`The moment the player runs out of tickets`,`Ngay khi người chơi hết ticket`),
       t(`Each time tickets run out in the same attempt`,`Mỗi lần hết ticket trong cùng lượt chơi`),
-      t(`1 ad revive per attempt`,`1 lần bằng quảng cáo mỗi lượt`),see('additional-mechanics','1.3')],
+      t(`1 ad revive per attempt. 1st loss ever: 1 free revive.`,`1 lần bằng quảng cáo mỗi lượt. Thua lần đầu: 1 lần hồi sinh miễn phí.`),see('additional-mechanics','1.3')],
     [nm('Refill lives','Nạp tim'),t('Coins (900 → 5 lives) or rewarded ad (1 life)','Xu (900 → 5 tim) hoặc quảng cáo có thưởng (1 tim)'),t('Always','Luôn có'),
       t(`Starting a level with 0 lives`,`Bắt đầu màn khi còn 0 tim`),
       t(`Each time the condition is met`,`Mỗi lần thỏa điều kiện`),
@@ -1592,6 +1598,12 @@ function view(l){
   /* Add one day() block per day, newest first, with one ent per area changed */
   const day=(title,body)=>`<div class="sub"><h3><span>${title}</span></h3>${body}</div>`;
   B['change-note']=`<p class="sec-intro">${t('Changes made to this GDD, newest day first.','Các thay đổi của tài liệu này, ngày mới nhất ở trên cùng.')}</p>`+
+    day('2026-11-02',
+      ent(t('First-time losing and Eraser','Thua lần đầu và Eraser'),ul([
+        t(`Revive (1.3): the first time a player runs out of tickets, the revive is free. Once per player.`,`Hồi sinh (1.3): lần đầu người chơi hết ticket, hồi sinh miễn phí. 1 lần cho mỗi người chơi.`),
+        t(`Popup list (7.1): the Revive row mentions the free first revive.`,`Danh sách popup (7.1): dòng Hồi sinh ghi thêm lần hồi sinh miễn phí đầu tiên.`),
+        t(`Booster Erase is renamed Eraser everywhere.`,`Booster Erase đổi tên thành Eraser ở mọi chỗ.`)
+      ])))+
     day('2026-10-26',
       ent(t('Popup logic and sections','Logic popup và cấu trúc mục'),ul([
         t(`Popup list and priority move to section 7 (7.1, 7.2). Store, Starter Pack and Remove Ads become 6.2–6.4.`,`Danh sách popup và thứ tự ưu tiên chuyển sang mục 7 (7.1, 7.2). Cửa hàng, Gói Khởi đầu và Gỡ quảng cáo thành 6.2–6.4.`),
@@ -1663,7 +1675,7 @@ function view(l){
     ['B',t('Board','Bàn chơi'),t('Interlocked trains. Each head points the way its train exits.','Các tàu đan vào nhau. Đầu tàu chỉ hướng tàu đi ra.')],
     ['C',t('Free train','Tàu tự do'),t('Nothing blocks the path from its head to the edge. Tap it and it leaves.','Đường từ đầu tàu tới mép bàn chơi không bị chặn. Chạm vào là tàu đi ra.')],
     ['D',t('Blocked train','Tàu bị chặn'),t('Another train’s body crosses its path. Tapping it costs a ticket.','Thân tàu khác cắt ngang đường ra. Chạm vào sẽ mất một ticket.')],
-    ['E',t('Booster bar','Thanh booster'),t('Remove, Erase and Highlight, unlocked at levels 3, 5 and 7.','Remove, Erase và Highlight, mở ở màn 3, 5 và 7.')]
+    ['E',t('Booster bar','Thanh booster'),t('Remove, Eraser and Highlight, unlocked at levels 3, 5 and 7.','Remove, Eraser và Highlight, mở ở màn 3, 5 và 7.')]
   ];
   const hero=`<div class="hero" id="top" data-sec="top" data-spy="top">
     <div>
