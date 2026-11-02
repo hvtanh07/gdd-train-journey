@@ -1268,8 +1268,8 @@ function view(l){
       [t('Tap the green train','Chạm tàu xanh lá'),lvl(1),t('The player taps the green train.','Người chơi chạm vào tàu xanh lá.'),t('Green train','Tàu xanh lá'),dash,dash],
       [t('Complete level 1','Hoàn thành màn 1'),lvl(1),t('The win screen appears.','Màn hình thắng hiện ra.'),dash,dash,t('Yes','Có')],
       [t('Load level 2','Tải màn 2'),lvl(2),t('The game loads into level 2.','Trò chơi vào màn 2.'),dash,dash,dash],
-      [t('Zoom','Phóng to'),lvl(2),t('The player zooms in with 2 fingers.','Người chơi phóng to bằng 2 ngón tay.'),dash,
-       popup('Swipe with 2 fingers<br>to zoom in','Vuốt bằng 2 ngón tay<br>để phóng to'),dash]
+      [t('Zoom','Phóng to'),lvl(2),t('The player zooms in and out with 2 fingers.','Người chơi phóng to và thu nhỏ bằng 2 ngón tay.'),dash,
+       popup('Use 2 fingers<br>to zoom in and out','Dùng 2 ngón tay<br>để phóng to và thu nhỏ'),dash]
     ],'wide steps-tbl');
 
   /* PER GAME: one row per element, in unlock order */
@@ -1286,7 +1286,7 @@ function view(l){
     [t('Booster','Booster'),t('Popup text','Nội dung popup'),t('Unlocks at level','Mở ở màn'),t('Free boosters','Số lượt tặng')],
     [
       [N.bo1,popup('Remove a random train.','Lấy ra một tàu ngẫu nhiên.'),lvl(3),lvl(3)],
-      [N.bo2,popup('Delete any train<br>of your choice.','Xóa bất kỳ tàu nào<br>bạn chọn.'),lvl(5),lvl(3)],
+      [N.bo2,popup('Choose and delete<br>any train of your choice.','Chọn và xóa<br>bất kỳ tàu nào bạn muốn.'),lvl(5),lvl(3)],
       [N.bo3,popup('Reveals every train’s path.','Hiện đường ra của mọi tàu.'),lvl(7),lvl(3)]
     ]);
 
@@ -1602,7 +1602,8 @@ function view(l){
       ent(t('First-time losing and Eraser','Thua lần đầu và Eraser'),ul([
         t(`Revive (1.3): the first time a player runs out of tickets, the revive is free. Once per player.`,`Hồi sinh (1.3): lần đầu người chơi hết ticket, hồi sinh miễn phí. 1 lần cho mỗi người chơi.`),
         t(`Popup list (7.1): the Revive row mentions the free first revive.`,`Danh sách popup (7.1): dòng Hồi sinh ghi thêm lần hồi sinh miễn phí đầu tiên.`),
-        t(`Booster Erase is renamed Eraser everywhere.`,`Booster Erase đổi tên thành Eraser ở mọi chỗ.`)
+        t(`Booster Erase is renamed Eraser everywhere.`,`Booster Erase đổi tên thành Eraser ở mọi chỗ.`),
+        t(`New popup text: Eraser “Choose and delete any train of your choice.”, zoom step “Use 2 fingers to zoom in and out”.`,`Nội dung popup mới: Eraser “Choose and delete any train of your choice.”, bước phóng to “Use 2 fingers to zoom in and out”.`)
       ])))+
     day('2026-10-26',
       ent(t('Popup logic and sections','Logic popup và cấu trúc mục'),ul([
