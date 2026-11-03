@@ -499,7 +499,8 @@ const SECTIONS=[
     {id:'main-game-mechanics',n:'1.2',en:'Core loop',vi:'Core loop'},
     {id:'additional-mechanics',n:'1.3',en:'Additional mechanics',vi:'Cơ chế bổ sung'},
     {id:'elements-mechanics',n:'1.4',en:'Elements',vi:'Yếu tố đặc biệt'},
-    {id:'booster-mechanics',n:'1.5',en:'Boosters',vi:'Booster'}]},
+    {id:'booster-mechanics',n:'1.5',en:'Boosters',vi:'Booster'},
+    {id:'level-list',n:'1.6',en:'Level features & difficulty',vi:'Yếu tố & độ khó theo màn'}]},
   {id:'ftue--tutorial',n:'2',c:2,en:'FTUE & tutorial',vi:'FTUE & hướng dẫn',subs:[
     {id:'ftue-logic',n:'2.1',en:'FTUE logic',vi:'Cách FTUE hoạt động'},
     {id:'ftue-steps',n:'2.2',en:'FTUE steps',vi:'Các bước FTUE'},
@@ -1290,6 +1291,15 @@ function view(l){
     [3,P.bo1,'boost','booster-mechanics'],[5,P.bo2,'boost','booster-mechanics'],[7,P.bo3,'boost','booster-mechanics'],
     [11,P.el1,'elem','elements-mechanics'],[17,P.el2,'elem','elements-mechanics'],[22,P.el3,'elem','elements-mechanics']
   ];
+  /* PER GAME: level data from the level sheet. One string per level, 1–40: Overlap, Dual-Head, Linked, Hard (1 = yes) */
+  const LEVELS=['0000','0000','0000','0000','0000','0000','0000','0000','0000','0001','1000','1000','1000','1000','0001','0000','0100','0100','0000','0101','1000','0010','0010','0100','0111','1000','1000','0100','0000','0011','0000','0010','0010','0100','0001','1000','0100','0010','1000','1111'];
+  const yes='<span aria-label="✓">✓</span>';
+  B['level-list']=`<p class="sec-intro">${t('Which elements appear in each level, and which levels are hard. From the level data sheet.','Yếu tố đặc biệt xuất hiện ở từng màn, và các màn khó. Lấy từ sheet dữ liệu màn.')}</p>`+
+    table(t('Level features and difficulty','Yếu tố và độ khó theo màn'),
+      [t('Level','Màn'),P.el1,P.el2,P.el3,t('Difficulty','Độ khó')],
+      LEVELS.map((f,i)=>[lvl(i+1),f[0]==='1'?yes:'',f[1]==='1'?yes:'',f[2]==='1'?yes:'',f[3]==='1'?'<b>Hard</b>':'']),'compact')+
+    `<p class="note">${t(`Each element first appears at its unlock level (11, 17, 22). Hard levels are every 5th level from 10. Level 40 has all three elements.`,`Mỗi yếu tố xuất hiện lần đầu ở màn mở khóa (11, 17, 22). Màn khó là mỗi 5 màn, bắt đầu từ màn 10. Màn 40 có đủ cả ba yếu tố.`)}</p>`;
+
   B['ftue--tutorial:after']=`<div class="glance">
     <h4>${t('Unlock order at a glance','Thứ tự mở khóa theo màn')}</h4>
     <p>${t('Sections 2.2 to 2.4 on one line, in level order.','Gom các mục 2.2 đến 2.4 trên một dòng, theo thứ tự màn chơi.')}</p>
@@ -1592,6 +1602,10 @@ function view(l){
   /* Add one day() block per day, newest first, with one ent per area changed */
   const day=(title,body)=>`<div class="sub"><h3><span>${title}</span></h3>${body}</div>`;
   B['change-note']=`<p class="sec-intro">${t('Changes made to this GDD, newest day first.','Các thay đổi của tài liệu này, ngày mới nhất ở trên cùng.')}</p>`+
+    day('2026-11-03',
+      ent(t('Level features and difficulty','Yếu tố và độ khó theo màn'),ul([
+        t(`New section 1.6: a table of levels 1–40 with the elements in each level and the hard levels, from the level data sheet.`,`Thêm mục 1.6: bảng màn 1–40 ghi yếu tố đặc biệt của từng màn và các màn khó, lấy từ sheet dữ liệu màn.`)
+      ])))+
     day('2026-10-26',
       ent(t('Popup logic and sections','Logic popup và cấu trúc mục'),ul([
         t(`Popup list and priority move to section 7 (7.1, 7.2). Store, Starter Pack and Remove Ads become 6.2–6.4.`,`Danh sách popup và thứ tự ưu tiên chuyển sang mục 7 (7.1, 7.2). Cửa hàng, Gói Khởi đầu và Gỡ quảng cáo thành 6.2–6.4.`),
