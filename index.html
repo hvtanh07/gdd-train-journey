@@ -1371,7 +1371,7 @@ function view(l){
   B['remote-config']=`<p class="sec-intro">${t(
       `Values the team can change without releasing a new build.`,
       `Các thông số mà đội có thể chỉnh mà không cần phát hành bản game mới.`)}</p>`+
-    `<p class="note">${t(`Values follow the shared template defaults, except tickets and lives (from Train_GDD.md), level loop back (40, 21) and offer unlock levels (8, 13, 10). Confirm them for Train Journey.`,`Các giá trị theo mặc định của template chung, trừ ticket và mạng (lấy từ Train_GDD.md), lặp lại màn (40, 21) và màn mở ưu đãi (8, 13, 10). Cần xác nhận lại cho Train Journey.`)}</p>`+
+    `<p class="note">${t(`Values follow the shared template defaults, except tickets and lives (from Train_GDD.md), level loop back (40, 21) and offer unlock levels (12, 13, 10). Confirm them for Train Journey.`,`Các giá trị theo mặc định của template chung, trừ ticket và mạng (lấy từ Train_GDD.md), lặp lại màn (40, 21) và màn mở ưu đãi (12, 13, 10). Cần xác nhận lại cho Train Journey.`)}</p>`+
     rc(t('Gameplay','Gameplay'),[
       ['level_ticket_count',t('Tickets at the start of each level (each tap on a blocked train costs 1)','Số ticket khi bắt đầu mỗi màn (mỗi lần chạm vào tàu bị chặn mất 1)'),'3',t('tickets','ticket')]
     ])+
@@ -1403,7 +1403,7 @@ function view(l){
       ...boost('strong','Strong','mạnh','1,500')
     ])+
     rc(t('Unlock popups — offer unlock level','Popup mở khóa — màn mở ưu đãi'),[
-      ['starter_pack_unlock_level',t('Starter Pack (IAP) — level from which the offer popup can show','Gói Khởi đầu (IAP) — màn bắt đầu có thể hiện popup ưu đãi'),'8',t('level','màn')],
+      ['starter_pack_unlock_level',t('Starter Pack (IAP) — level from which the offer popup can show','Gói Khởi đầu (IAP) — màn bắt đầu có thể hiện popup ưu đãi'),'12',t('level','màn')],
       ['remove_ads_unlock_level',t('Remove Ads (IAP) — level from which the offer popup can show','Gỡ quảng cáo (IAP) — màn bắt đầu có thể hiện popup ưu đãi'),'13',t('level','màn')],
       ['garage_gift_unlock_level',t('First-Class Package (rewarded ad) — level from which the gift popup can show','First-Class Package (quảng cáo thưởng) — màn bắt đầu có thể hiện popup quà'),'10',t('level','màn')]
     ])+
@@ -1453,8 +1453,8 @@ function view(l){
   /* one row per popup: [name, paid with, unlock, when it shows, repeats, limits, rules]. Store and icon rules live in each popup's detail section. */
   const popRows=[
     [t('IAP popups','Popup IAP')],
-    [nm('Starter Pack','Gói Khởi đầu'),`IAP<br>${pid('starterpack')}`,lvl(8),
-      t(`1st: Level Complete of level 8`,`Lần đầu: Level Complete màn 8`),
+    [nm('Starter Pack','Gói Khởi đầu'),`IAP<br>${pid('starterpack')}`,lvl(12),
+      t(`1st: Level Complete of level 12`,`Lần đầu: Level Complete màn 12`),
       t(`Every session start while the 72 h run`,`Mỗi lần mở game khi còn 72 giờ`),
       t(`72 h from the 1st popup, then gone. Priority 1, never blocked.`,`72 giờ từ popup đầu, sau đó mất hẳn. Ưu tiên 1, không bị chặn.`),see('starter-pack','6.3')],
     [nm('Remove Ads','Gỡ quảng cáo'),`IAP<br>${pid('removeads')}`,lvl(13),
@@ -1519,7 +1519,7 @@ function view(l){
       tiles([['2,500',t('Gold','Vàng')],['2×',t('Each booster','Mỗi công cụ')],[t('2 h','2 giờ'),t('Unlimited lives','Tim vô hạn')],['$1.99',t('Price','Giá'),'hot']])+
       panel(t('Popup appear logic','Logic hiện popup'),
         table(t('Starter Pack popup appear logic','Logic hiện popup Gói Khởi đầu'),[t('Popup shows','Lần hiện'),t('Trigger','Điều kiện'),t('Hard cap','Giới hạn')],[
-          [t('1st','Lần 1'),t('Level Complete of level 8','Level Complete màn 8'),t('Once. Starts the 72 h timer.','1 lần. Bắt đầu timer 72 giờ.')],
+          [t('1st','Lần 1'),t('Level Complete of level 12','Level Complete màn 12'),t('Once. Starts the 72 h timer.','1 lần. Bắt đầu timer 72 giờ.')],
           [t('Next','Các lần sau'),t('Every session start while the 72 h run','Mỗi lần mở game khi còn 72 giờ'),t('Once per session start','1 lần mỗi lần mở game')],
           [t('End','Kết thúc'),t('Bought, or 72 h over','Đã mua, hoặc hết 72 giờ'),t('Gone for good, never shows again','Biến mất vĩnh viễn, không hiện lại')]
         ],'compact'))+
@@ -1602,8 +1602,8 @@ function view(l){
   B['change-note']=`<p class="sec-intro">${t('Changes made to this GDD, newest day first.','Các thay đổi của tài liệu này, ngày mới nhất ở trên cùng.')}</p>`+
     day('2026-11-04',
       ent(t('Offer unlock levels','Màn mở ưu đãi'),ul([
-        t(`Starter Pack unlocks at level 8 (was 12), Remove Ads at level 13 (was 15). First-Class Package stays at level 10.`,`Starter Pack mở ở màn 8 (trước là 12), Remove Ads ở màn 13 (trước là 15). First-Class Package giữ màn 10.`),
-        t(`Updated in remote config (5), the popup list (7.1) and the Starter Pack and Remove Ads sections (6.3, 6.4).`,`Đã sửa ở cấu hình từ xa (5), danh sách popup (7.1) và mục Gói Khởi đầu, Gỡ quảng cáo (6.3, 6.4).`)
+        t(`Remove Ads unlocks at level 13 (was 15). Starter Pack stays at level 12 and First-Class Package at level 10.`,`Remove Ads mở ở màn 13 (trước là 15). Starter Pack giữ màn 12, First-Class Package giữ màn 10.`),
+        t(`Updated in remote config (5), the popup list (7.1) and the Remove Ads section (6.4).`,`Đã sửa ở cấu hình từ xa (5), danh sách popup (7.1) và mục Gỡ quảng cáo (6.4).`)
       ])))+
     day('2026-11-02',
       ent(t('First-time losing and Eraser','Thua lần đầu và Eraser'),ul([
